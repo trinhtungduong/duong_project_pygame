@@ -9,7 +9,7 @@ from particles import ParticleEffect
 from game_data import levels
 
 class Level:
-	def __init__(self,current_level,surface,create_overworld,change_coins,change_health):
+	def __init__(self,current_level,surface,create_overworld,change_coins,return_coins,change_health):
 		# general setup
 		self.display_surface = surface
 		self.world_shift = 0
@@ -33,6 +33,7 @@ class Level:
 
 		# user interface 
 		self.change_coins = change_coins
+		self.return_coins = return_coins
 
 		# dust 
 		self.dust_sprite = pygame.sprite.GroupSingle()
@@ -215,6 +216,7 @@ class Level:
 	def check_death(self):
 		if self.player.sprite.rect.top > screen_height:
 			self.create_overworld(self.current_level,0)
+			self.return_coins()
 			
 	def check_win(self):
 		if pygame.sprite.spritecollide(self.player.sprite,self.goal,False):
