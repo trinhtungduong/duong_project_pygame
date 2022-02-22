@@ -1,4 +1,5 @@
 import pygame
+from pygame import font
 
 class UI:
 	def __init__(self,surface):
@@ -17,6 +18,11 @@ class UI:
 		self.coin_rect = self.coin.get_rect(topleft = (50,61))
 		self.font = pygame.font.Font('graphics\\ui\\ARCADEPI.ttf',30)
 
+		#high score:
+		self.highscore_rect = self.coin.get_rect(topleft = (50,90))
+		self.hscore = pygame.image.load('graphics\\ui\\cup.png').convert_alpha()
+		self.hscore = pygame.transform.scale(self.hscore,(32,32))
+
 	def show_health(self,current,full):
 		self.display_surface.blit(self.health_bar,(20,10))
 		current_health_ratio = current / full
@@ -27,5 +33,11 @@ class UI:
 	def show_coins(self,amount):
 		self.display_surface.blit(self.coin,self.coin_rect)
 		coin_amount_surf = self.font.render(str(amount),False,'#33323d')
-		coin_amount_rect = coin_amount_surf.get_rect(midleft = (self.coin_rect.right + 4,self.coin_rect.centery))
+		coin_amount_rect = coin_amount_surf.get_rect(midleft = (self.coin_rect.right + 10,self.coin_rect.centery))
+		self.display_surface.blit(coin_amount_surf,coin_amount_rect)
+	
+	def show_highscore(self,amount):
+		self.display_surface.blit(self.hscore,self.highscore_rect)		
+		coin_amount_surf = self.font.render(str(amount),False,'#33323d')
+		coin_amount_rect = coin_amount_surf.get_rect(midleft = (self.highscore_rect.right + 10,self.highscore_rect.centery))		
 		self.display_surface.blit(coin_amount_surf,coin_amount_rect)
